@@ -1,10 +1,14 @@
 package edu.cmu.mis.iccfb.controller;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import edu.cmu.mis.iccfb.model.Author;
@@ -24,6 +28,21 @@ public class QuoteController {
     @RequestMapping("/api/quote/random")
     public Quote random() {
         return quoteService.randomQuote();
+    }
+    
+    @RequestMapping(value = "/api/quote", method = RequestMethod.GET)
+    public List<Quote> inquiry(@RequestParam(value = "quote") Quote quote) {
+    	System.out.println("$$$$$$$$$$$$$$");
+    	System.out.println(quote.getAuthor().getName());
+        Author a = authorService.findByName(quote.getAuthor().getName());
+        ArrayList<Quote> quotes = new ArrayList<Quote>();
+        
+        if (a.getQuotes() != null) {
+           for (Quote q: a.getQuotes()) {
+              quotes.add(q);
+           }
+        }
+        return quotes;
     }
     
     @RequestMapping(value = "/api/quote", method = RequestMethod.POST)

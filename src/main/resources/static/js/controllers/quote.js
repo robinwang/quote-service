@@ -21,4 +21,11 @@ angular.module('app.controllers', [])
             }
         );
     };
+})
+.controller('AuthorQuoteCtrl', function($scope, QuoteService) {
+	
+	    QuoteService.get({quote: $scope.quote}, function(quotes) {
+    			$scope.author.name = $scope.quote.author.name;
+    			$scope.author.quotes = quotes
+    	});
 });

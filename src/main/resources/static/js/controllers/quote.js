@@ -22,10 +22,8 @@ angular.module('app.controllers', [])
         );
     };
 })
-.controller('AuthorQuoteCtrl', function($scope, QuoteService) {
-	
-	    QuoteService.get({quote: $scope.quote}, function(quotes) {
-    			$scope.author.name = $scope.quote.author.name;
-    			$scope.author.quotes = quotes
+.controller('AuthorQuoteCtrl', function($scope, AuthorService, $stateParams) {
+	    AuthorService.get({authorId: $stateParams.authorId}, function(author) {	
+	    	$scope.author = author;
     	});
 });

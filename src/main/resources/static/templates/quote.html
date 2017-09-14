@@ -10,4 +10,4 @@
 </div>
 
 <a ui-sref="add" class="quote-add">Add</a>
-<a ui-sref="list" class="quote-list">More Quotes on {{quote.author.name}}</a>
+<a ui-sref="author({authorId: quote.author.id})" class="quote-list">More Quotes on {{quote.author.name}}</a>

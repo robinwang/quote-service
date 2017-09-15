@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -30,19 +31,10 @@ public class QuoteController {
         return quoteService.randomQuote();
     }
     
-    @RequestMapping(value = "/api/quote", method = RequestMethod.GET)
-    public List<Quote> inquiry(@RequestParam(value = "quote") Quote quote) {
-    	System.out.println("$$$$$$$$$$$$$$");
-    	System.out.println(quote.getAuthor().getName());
-        Author a = authorService.findByName(quote.getAuthor().getName());
-        ArrayList<Quote> quotes = new ArrayList<Quote>();
-        
-        if (a.getQuotes() != null) {
-           for (Quote q: a.getQuotes()) {
-              quotes.add(q);
-           }
-        }
-        return quotes;
+    @RequestMapping(value = "/api/author/{authorId}")
+    public Author inquiry(@PathVariable("authorId") long authorId) {
+        Author a = authorService.findOne(authorId);
+        return a;
     }
     
     @RequestMapping(value = "/api/quote", method = RequestMethod.POST)

@@ -53,9 +53,27 @@ public class SeedData {
                 "https://en.wikiquote.org/wiki/Albert_Einstein", 
                 a3);
         
+        Quote q4 = new Quote(
+                "To give real service you must add something which cannot be bought or measured with money, and that is sincerity and integrity",
+                "https://en.wikiquote.org/wiki/Douglas_Adams", 
+                a1);
+        
+        Quote q5 = new Quote(
+                "I love deadlines. I like the whooshing sound they make as they fly by.", 
+                "https://en.wikiquote.org/wiki/Douglas_Adams", 
+                a1);
+        
+        Quote q6 = new Quote(
+                "The true sign of intelligence is not knowledge but imagination.", 
+                "https://en.wikiquote.org/wiki/Albert_Einstein", 
+                a3);
+        
         quoteService.save(q1);
         quoteService.save(q2);
         quoteService.save(q3);
+        quoteService.save(q4);
+        quoteService.save(q5);
+        quoteService.save(q6);
         
 //        log.info("Quoates found with findAll():");
 //        log.info("-------------------------------");

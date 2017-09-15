@@ -5,9 +5,8 @@
 </div>
 <div class="row">
  <div class="col-md-12">
-  <p class="text-right">- {{quote.author.name}}</p>
+  <p class="text-right"><a ui-sref="author({authorId: quote.author.id})">- {{quote.author.name}}</a></p>
  </div>
 </div>
 
 <a ui-sref="add" class="quote-add">Add</a>
-<a ui-sref="author({authorId: quote.author.id})" class="quote-list">More Quotes on {{quote.author.name}}</a>

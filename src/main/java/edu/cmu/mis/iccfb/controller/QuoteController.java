@@ -3,6 +3,7 @@ package edu.cmu.mis.iccfb.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,9 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import edu.cmu.mis.iccfb.model.Author;
 import edu.cmu.mis.iccfb.model.Quote;
-import edu.cmu.mis.iccfb.service.AuthorService;
 import edu.cmu.mis.iccfb.service.QuoteService;
 
 @RestController
@@ -23,35 +22,32 @@ public class QuoteController {
     @Autowired
     private QuoteService quoteService;
     
-    @Autowired
-    private AuthorService authorService;
+    @RequestMapping("/quote")
+    public ArrayList<Quote> quote(@RequestParam(value="authorId") String authorId) {
+    	ArrayList<Quote> quotes = new ArrayList<Quote>();
+        
+        for (Quote q: this.quoteService.findAll() ) {
+            if (q.getAuthorId().equals(authorId)) {
+            	quotes.add(q);
+            }
+        }
+        return quotes;
+    }
     
-    @RequestMapping("/api/quote/random")
+    @RequestMapping("/random/quote")
     public Quote random() {
-        return quoteService.randomQuote();
+    	Random random = new Random();
+        ArrayList<Quote> quotes = new ArrayList<Quote>();
+        
+        for (Quote q: this.quoteService.findAll() ) {
+            quotes.add(q);
+        }
+        Quote q = quotes.get(random.nextInt(quotes.size()));
+        return q;
     }
     
-    @RequestMapping(value = "/api/author/{authorId}")
-    public Author inquiry(@PathVariable("authorId") long authorId) {
-        Author a = authorService.findOne(authorId);
-        return a;
-    }
-    
-    @RequestMapping(value = "/api/quote", method = RequestMethod.POST)
+    @RequestMapping(value = "/quote", method = RequestMethod.POST)
     public void saveQuote(@RequestBody Quote quote) {
-        System.out.println(quote);
-        
-        Author a = authorService.findByName(quote.getAuthor().getName());
-        
-        if (a == null) {
-            System.out.println("Saving author");
-            authorService.save(quote.getAuthor());
-        }
-        else {
-        	quote.setAuthor(a);
-        }
-
-        
         System.out.println("Saving quote");
         quoteService.save(quote);
     }

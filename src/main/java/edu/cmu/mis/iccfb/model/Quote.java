@@ -1,5 +1,9 @@
 package edu.cmu.mis.iccfb.model;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -7,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
@@ -19,30 +24,24 @@ public class Quote {
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Long id;
 
-
     private String text;
 
     private String source;
     
     
-    @ManyToOne(fetch=FetchType.EAGER)
-    @JoinColumn(name="authorId")
+    //@ManyToOne(fetch=FetchType.EAGER)
+    //@JoinColumn(name="authorId")
     //@JsonManagedReference
 
-    private Author author;
+    private String authorId;
     
 
     public Quote() {}
 
-    public Quote(String text, String source, Author author) {
+    public Quote(String text, String source, String authorId) {
         this.text = text;
         this.source = source;
-        this.author = author;
-    }
-
-    @Override
-    public String toString() {
-        return String.format("Quote[id=%d, text='%s', by='%s']", this.id, this.text, this.author.getName());
+        this.authorId = authorId;
     }
 
     public String getText() {
@@ -61,12 +60,12 @@ public class Quote {
         this.source = source;
     }
 
-    public Author getAuthor() {
-        return author;
+    public String getAuthorId() {
+        return authorId;
     }
 
-    public void setAuthor(Author author) {
-        this.author = author;
+    public void setAuthorId(String authorId) {
+        this.authorId = authorId;
     }
 
     public Long getId() {

@@ -18,7 +18,6 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 
 @Entity
-@JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class, property="@jsonid")
 public class Quote {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
